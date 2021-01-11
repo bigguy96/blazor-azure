@@ -1,0 +1,53 @@
+﻿@page "/"
+
+@using ClassLibrary.Interfaces;
+@using Entities;
+@using BlazorApp2.Data;
+
+@inject NavigationManager NavigationManager
+@inject IAzureRepositoriesService AzureRepositoriesService
+
+<h1 class="mt-md-3">Repositories</h1>
+
+<EditForm Model="@Repo" OnSubmit="@FormSubmitted">
+    <fieldset>
+        <legend><strong>Select a repository</strong></legend>
+
+        <div class="form-group">
+            <label for="r"><strong>Repository:</strong></label>
+            <InputSelect id="r" @bind-Value="Repo.Id" class="form-control">
+                @if (repository != null)
+                {
+                    @foreach (var item in repository.value)
+                    {
+                        <option value="@item.id">@item.name</option>
+                    }
+                }
+            </InputSelect>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Select</button>
+        </div>
+    </fieldset>
+</EditForm>
+
+@code {
+
+    public Repository repository;
+    Repo Repo = new Repo();
+
+    protected async override Task OnInitializedAsync()
+    {
+        repository = await AzureRepositoriesService.GetAllRepositories();
+
+        Repo.Id = repository.value[0].id;
+    }
+
+    void FormSubmitted()
+    {
+        NavigationManager.NavigateTo($"/branches/{Repo.Id}", true);
+    }
+}
+
+@*https://github.com/dotnet/aspnetcore/issues/14977*@

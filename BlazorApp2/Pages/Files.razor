@@ -1,0 +1,51 @@
+﻿@page "/files/{Branch}"
+
+@using ClassLibrary.Interfaces;
+@using Entities;
+
+@inject IAzureRepositoriesService AzureRepositoriesService
+
+<h1>Branch Files</h1>
+
+<p><strong>Records found:</strong> @count</p>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th scope="col">
+                Path
+            </th>
+            <th scope="col">
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (values != null)
+        {
+            @foreach (var item in values)
+            {
+                <tr>
+                    <td>@item.path</td>
+                    <td><a href="/view/@item.objectId">View</a></td>
+                </tr>                
+            }
+        }
+    </tbody>
+</table>
+
+@code {
+
+    [Parameter]
+    public string Branch { get; set; }
+
+    public RepositoryFile repository;
+    IEnumerable<Value3> values;
+    int count = 0;
+
+    protected async override Task OnInitializedAsync()
+    {
+        repository = await AzureRepositoriesService.GetAllRepositoryFiles(Branch);
+        values = repository.value.Where(x => x.gitObjectType.Equals("blob"));
+        count = values.Count();
+    }
+}

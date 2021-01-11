@@ -1,0 +1,54 @@
+﻿@page "/branches/{Id}"
+
+@using ClassLibrary.Interfaces;
+@using Entities;
+@using BlazorApp2.Data;
+
+@inject NavigationManager NavigationManager
+@inject IAzureRepositoriesService AzureRepositoriesService
+
+<h1>Branches</h1>
+
+<EditForm Model="@Repo" OnSubmit="@FormSubmitted">
+    <fieldset>
+        <legend><strong>Select a branch</strong></legend>
+
+        <div class="form-group">
+            <label for="r"><strong>Branches:</strong></label>
+            <InputSelect id="r" @bind-Value="Repo.Id" class="form-control" size="10">
+                @if (repository != null)
+                {
+                    @foreach (var item in repository.value)
+                    {
+                        <option value="@item.name">@item.name</option>
+                    }
+                }
+            </InputSelect>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Select</button>
+        </div>
+    </fieldset>
+</EditForm>
+
+@code {
+
+    [Parameter]
+    public string Id { get; set; }
+
+    public RepositoryBranch repository;
+    Repo Repo = new Repo();
+    int count = 0;
+
+    protected async override Task OnInitializedAsync()
+    {
+        repository = await AzureRepositoriesService.GetAllRepositoryBranches(Id);
+        count = repository.value.Count();
+    }
+
+    void FormSubmitted()
+    {
+        NavigationManager.NavigateTo($"/files/{Repo.Id.Replace("/", "!")}", true);
+    }
+}
