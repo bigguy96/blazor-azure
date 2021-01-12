@@ -1,2 +1,2 @@
 # blazor-azure
-Exploring blazor while using the Azure Web Api.
+Exploring Blazor and the Azure Web Api.
