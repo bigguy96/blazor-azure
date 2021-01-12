@@ -30,6 +30,7 @@ namespace BlazorApp2
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddScoped<IAzureRepositoriesService, AzureRepositoriesService>();
+            services.AddScoped<IAzureWorkItemsService, AzureWorkItemsService>();
 
             services.AddHttpClient(MyClient, client =>
             {

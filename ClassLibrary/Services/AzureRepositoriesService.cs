@@ -21,7 +21,7 @@ namespace ClassLibrary.Services
 
         public async Task<Repository> GetAllRepositories()
         {
-            const string uri = "?api-version=6.0";
+            const string uri = "_apis/git/repositories/?api-version=6.0";
             var response = await _httpClient.GetAsync(uri);
             var json = await response.Content.ReadAsStringAsync();
 
@@ -30,7 +30,7 @@ namespace ClassLibrary.Services
 
         public async Task<RepositoryBranch> GetAllRepositoryBranches(string id)
         {
-            var uri = $"{id}/refs?api-version=5.0";
+            var uri = $"_apis/git/repositories/{id}/refs?api-version=5.0";
             var response = await _httpClient.GetAsync(uri);
             var json = await response.Content.ReadAsStringAsync();
 
@@ -41,7 +41,7 @@ namespace ClassLibrary.Services
         {
             branch = branch.Replace("!","/").Replace("refs/heads/", "").Replace("refs/tags/", "");
             
-            var uri = $"myTC%20Account/items?api-version=6.0&recursionLevel=Full&includeContentMetadata=true&versionDescriptor.versionType=branch&versionDescriptor.version={branch}";
+            var uri = $"_apis/git/repositories/myTC%20Account/items?api-version=6.0&recursionLevel=Full&includeContentMetadata=true&versionDescriptor.versionType=branch&versionDescriptor.version={branch}";
             var response = await _httpClient.GetAsync(uri);
             var json = await response.Content.ReadAsStringAsync();
 
@@ -50,7 +50,7 @@ namespace ClassLibrary.Services
 
         public async Task<string> GetFile(string id)
         {
-            var uri = $"myTC%20Account/blobs/{id}?api-version=6.1-preview.1&$format=text";
+            var uri = $"_apis/git/repositories/myTC%20Account/blobs/{id}?api-version=6.1-preview.1&$format=text";
             var response = await _httpClient2.GetAsync(uri);
             var content = await response.Content.ReadAsStringAsync();
 
