@@ -4,6 +4,7 @@
 @using Entities;
 @using BlazorApp2.Data;
 
+@inject NavigationManager NavigationManager
 @inject IAzureWorkItemsService AzureWorkItemsService
 
 <h1 class="mt-md-3">Iterations</h1>
@@ -40,13 +41,11 @@
     protected async override Task OnInitializedAsync()
     {
         Iteration = await AzureWorkItemsService.GetIterations();
-        Values = Iteration.value.OrderByDescending(x => x.name).ToList();
-
-        //Repo.Id = repository.value[0].id;
+        Values = Iteration.value.OrderBy(x => x.name).ToList();
     }
 
     void FormSubmitted()
     {
-        //NavigationManager.NavigateTo($"/branches/{Repo.Id}", true);
+        NavigationManager.NavigateTo($"/workitems/{IterationModel.Id}", true);
     }
 }
