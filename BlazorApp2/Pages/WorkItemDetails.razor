@@ -1,0 +1,26 @@
+﻿@page "/workitemdetails/{Id}"
+
+@using ClassLibrary.Interfaces;
+@using Entities;
+@using BlazorApp2.Data;
+
+@inject IAzureWorkItemsService AzureWorkItemsService
+
+@code {
+
+    [Parameter]
+    public string Id { get; set; }
+
+    WorkItemIteration WorkItemIteration;
+    WorkItem WorkItem;
+
+    protected async override Task OnInitializedAsync()
+    {
+        WorkItemIteration = await AzureWorkItemsService.GetWorkItems(Id);
+
+        var ids = WorkItemIteration.workItemRelations.Select(x => x.target.id);
+        WorkItem = await AzureWorkItemsService.GetWorkItemDetails(ids);
+
+        var b = WorkItem;
+    }
+}

@@ -47,13 +47,12 @@ namespace ClassLibrary.Services
                     "System.Description"
                 }
             };
-            var json = JsonSerializer.Serialize(batch);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var jsonString = JsonSerializer.Serialize(batch);
+            var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
             var response = await _httpClient.PostAsync(uri, content);
+            var json = await response.Content.ReadAsStringAsync();
 
-            var t = await response.Content.ReadAsStringAsync();
-
-            return null;
+            return JsonSerializer.Deserialize<WorkItem>(json);
         }
 
         public async Task<WorkItemIteration> GetWorkItems(string id)

@@ -1,4 +1,6 @@
-﻿namespace Entities
+﻿using System.Text.Json.Serialization;
+
+namespace Entities
 {
     public class WorkItem
     {
@@ -17,13 +19,28 @@
 
     public class Fields
     {
+        [JsonPropertyName("System.Id")]
         public int SystemId { get; set; }
+        
+        [JsonPropertyName("SystemIteration.Path")]
         public string SystemIterationPath { get; set; }
+        
+        [JsonPropertyName("System.WorkItemType")]
         public string SystemWorkItemType { get; set; }
+        
+        [JsonPropertyName("SystemAssignedTo")]
         public SystemAssignedto SystemAssignedTo { get; set; }
+        
+        [JsonPropertyName("System.Title")]
         public string SystemTitle { get; set; }
+        
+        [JsonPropertyName("System.Description")]
         public string SystemDescription { get; set; }
+        
+        [JsonPropertyName("Microsoft.VSTS.TCM.ReproSteps")]
         public string MicrosoftVSTSTCMReproSteps { get; set; }
+        
+        [JsonPropertyName("Microsoft.VSTS.Common.AcceptanceCriteria")]
         public string MicrosoftVSTSCommonAcceptanceCriteria { get; set; }
     }
 
