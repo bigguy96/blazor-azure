@@ -2,9 +2,59 @@
 
 @using ClassLibrary.Interfaces;
 @using Entities;
-@using BlazorApp2.Data;
 
 @inject IAzureWorkItemsService AzureWorkItemsService
+
+@if (WorkItem != null)
+{
+    @foreach (var item in WorkItem.value)
+    {
+
+        <div style="margin-bottom: 10px; padding:10px; border: 1px solid #000;">
+            <p>
+                <strong>
+                    Assigned To:
+                </strong>
+                <br />@item.fields.SystemAssignedTo?.displayName
+            </p>
+
+            <p>
+                <strong>
+                    Description:
+                </strong>
+                <br />@((MarkupString)item.fields.SystemDescription)
+            </p>
+
+            <p>
+                <strong>
+                    Id:
+                </strong>
+                <br />@item.fields.SystemId
+            </p>
+
+            <p>
+                <strong>
+                    Path:
+                </strong>
+                <br />@item.fields.SystemIterationPath
+            </p>
+
+            <p>
+                <strong>
+                    Title:
+                </strong>
+                <br />@item.fields.SystemTitle
+            </p>
+
+            <p>
+                <strong>
+                    Type:
+                </strong>
+                <br />@item.fields.SystemWorkItemType
+            </p>
+        </div>
+    }
+}
 
 @code {
 

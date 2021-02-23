@@ -22,13 +22,13 @@ namespace Entities
         [JsonPropertyName("System.Id")]
         public int SystemId { get; set; }
         
-        [JsonPropertyName("SystemIteration.Path")]
+        [JsonPropertyName("System.IterationPath")]
         public string SystemIterationPath { get; set; }
         
         [JsonPropertyName("System.WorkItemType")]
         public string SystemWorkItemType { get; set; }
         
-        [JsonPropertyName("SystemAssignedTo")]
+        [JsonPropertyName("System.AssignedTo")]
         public SystemAssignedto SystemAssignedTo { get; set; }
         
         [JsonPropertyName("System.Title")]
