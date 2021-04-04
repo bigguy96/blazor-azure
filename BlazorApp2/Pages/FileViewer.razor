@@ -4,45 +4,31 @@
 
 @inject NavigationManager NavigationManager
 @inject IAzureRepositoriesService AzureRepositoriesService
-@inject IJSRuntime JSRuntime
+@inject IJSRuntime JsRuntime
 
 <h1>File Viewer</h1>
 
 <form>
-    <textarea class="language-csharp" rows="@lines" cols="125">
-             @content
-        </textarea>   
+    <textarea rows="@Lines" cols="125" id="code">             
+    </textarea>
 </form>
-
-<pre>
-    <code class="language-csharp">
-        @*public class FileAttachmentsController : BaseServiceApiController
-        {
-            private readonly IFileAttachmentManager _fileAttachmentManager;
-            private readonly IServiceRequestManager _serviceRequestManager;
-
-            _logger;
-            private readonly IServiceSettingManager _serviceSettingManager;
-        }*@        
-    </code>
-</pre>
 
 @code {
 
     [Parameter]
     public string Id { get; set; }
 
-    public string content = "";
-    public int lines = 0;
+    public string Content = "";
+    public int Lines = 0;
 
-    protected async override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
-        content = await AzureRepositoriesService.GetFile(Id);
-        lines = content.Split('\n').Length;        
+        Content = await AzureRepositoriesService.GetFile(Id);
+        Lines = Content.Split('\n').Length;
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await JSRuntime.InvokeVoidAsync("SetContent", content);
+        await JsRuntime.InvokeVoidAsync("SetContent", Content);
     }
 }

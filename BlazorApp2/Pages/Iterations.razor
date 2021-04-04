@@ -14,11 +14,11 @@
         <legend><strong>Select an iteration</strong></legend>
 
         <div class="form-group">
-            <label for="r"><strong>Iteration:</strong></label>
-            <InputSelect id="r" @bind-Value="IterationModel.Id" class="form-control">
-                @if (Values != null)
+            <label for="r" class="form-label"><strong>Iteration:</strong></label>
+            <InputSelect id="r" @bind-Value="IterationModel.Id" class="form-control form-select form-select-sm mb-3">
+                @if (_values != null)
                 {
-                    @foreach (var item in Values)
+                    @foreach (var item in _values)
                     {
                         <option value="@item.id">@item.name</option>
                     }
@@ -35,13 +35,13 @@
 @code {
 
     public Iteration Iteration { get; set; }
-    public IterationModel IterationModel = new IterationModel();
-    IEnumerable<Value4> Values;
+    public IterationModel IterationModel = new();
+    IEnumerable<Value4> _values;
 
-    protected async override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
         Iteration = await AzureWorkItemsService.GetIterations();
-        Values = Iteration.value.OrderBy(x => x.name).ToList();
+        _values = Iteration.value.OrderBy(x => x.name).ToList();
     }
 
     void FormSubmitted()

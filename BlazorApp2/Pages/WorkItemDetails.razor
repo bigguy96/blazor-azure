@@ -5,54 +5,50 @@
 
 @inject IAzureWorkItemsService AzureWorkItemsService
 
-@if (WorkItem != null)
+@if (_workItem != null)
 {
-    @foreach (var item in WorkItem.value)
+    @foreach (var item in _workItem.value)
     {
 
-        <div style="margin-bottom: 10px; padding:10px; border: 1px solid #000;">
-            <p>
-                <strong>
-                    Assigned To:
-                </strong>
-                <br />@item.fields.SystemAssignedTo?.displayName
-            </p>
+<div class="card text-dark bg-light mb-3">
+    <div class="card-header">@item.fields.SystemTitle</div>
+    <div class="card-body">
+        <p>
+            <strong>
+                Assigned To:
+            </strong>
+            <br />@item.fields.SystemAssignedTo?.displayName
+        </p>
 
-            <p>
-                <strong>
-                    Description:
-                </strong>
-                <br />@((MarkupString)item.fields.SystemDescription)
-            </p>
+        <p>
+            <strong>
+                Description:
+            </strong>
+            <br />@((MarkupString) item.fields.SystemDescription)
+        </p>
 
-            <p>
-                <strong>
-                    Id:
-                </strong>
-                <br />@item.fields.SystemId
-            </p>
+        <p>
+            <strong>
+                Id:
+            </strong>
+            <br />@item.fields.SystemId
+        </p>
 
-            <p>
-                <strong>
-                    Path:
-                </strong>
-                <br />@item.fields.SystemIterationPath
-            </p>
+        <p>
+            <strong>
+                Path:
+            </strong>
+            <br />@item.fields.SystemIterationPath
+        </p>
 
-            <p>
-                <strong>
-                    Title:
-                </strong>
-                <br />@item.fields.SystemTitle
-            </p>
-
-            <p>
-                <strong>
-                    Type:
-                </strong>
-                <br />@item.fields.SystemWorkItemType
-            </p>
-        </div>
+        <p>
+            <strong>
+                Type:
+            </strong>
+            <br />@item.fields.SystemWorkItemType
+        </p>
+    </div>
+</div>
     }
 }
 
@@ -61,16 +57,16 @@
     [Parameter]
     public string Id { get; set; }
 
-    WorkItemIteration WorkItemIteration;
-    WorkItem WorkItem;
+    WorkItemIteration _workItemIteration;
+    WorkItem _workItem;
 
-    protected async override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
-        WorkItemIteration = await AzureWorkItemsService.GetWorkItems(Id);
+        _workItemIteration = await AzureWorkItemsService.GetWorkItems(Id);
 
-        var ids = WorkItemIteration.workItemRelations.Select(x => x.target.id);
-        WorkItem = await AzureWorkItemsService.GetWorkItemDetails(ids);
+        var ids = _workItemIteration.workItemRelations.Select(x => x.target.id);
+        _workItem = await AzureWorkItemsService.GetWorkItemDetails(ids);
 
-        var b = WorkItem;
+        var b = _workItem;
     }
 }

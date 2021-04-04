@@ -9,16 +9,16 @@
 
 <h1 class="mt-md-3">Repositories</h1>
 
-<EditForm Model="@Repo" OnSubmit="@FormSubmitted">
+<EditForm Model="@_repo" OnSubmit="@FormSubmitted">
     <fieldset>
         <legend><strong>Select a repository</strong></legend>
 
         <div class="form-group">
-            <label for="r"><strong>Repository:</strong></label>
-            <InputSelect id="r" @bind-Value="Repo.Id" class="form-control">
-                @if (repository != null)
+            <label for="r" class="form-label"><strong>Repository:</strong></label>
+            <InputSelect id="r" @bind-Value="_repo.Id" size="5" class="form-control form-select form-select-sm mb-3">
+                @if (Repository != null)
                 {
-                    @foreach (var item in repository.value)
+                    @foreach (var item in Repository.value)
                     {
                         <option value="@item.id">@item.name</option>
                     }
@@ -34,19 +34,19 @@
 
 @code {
 
-    public Repository repository;
-    Repo Repo = new Repo();
+    public Repository Repository;
+    readonly Repo _repo = new Repo();
 
-    protected async override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
-        repository = await AzureRepositoriesService.GetAllRepositories();
+        Repository = await AzureRepositoriesService.GetAllRepositories();
 
-        Repo.Id = repository.value[0].id;
+        _repo.Id = Repository.value[0].id;
     }
 
     void FormSubmitted()
     {
-        NavigationManager.NavigateTo($"/branches/{Repo.Id}", true);
+        NavigationManager.NavigateTo($"/branches/{_repo.Id}", true);
     }
 }
 

@@ -7,7 +7,7 @@
 
 <h1>Branch Files</h1>
 
-<p><strong>Records found:</strong> @count</p>
+<p><strong>Records found:</strong> @_count</p>
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
@@ -20,9 +20,9 @@
         </tr>
     </thead>
     <tbody>
-        @if (values != null)
+        @if (_values != null)
         {
-            @foreach (var item in values)
+            @foreach (var item in _values)
             {
                 <tr>
                     <td>@item.path</td>
@@ -38,14 +38,14 @@
     [Parameter]
     public string Branch { get; set; }
 
-    public RepositoryFile repository;
-    IEnumerable<Value3> values;
-    int count = 0;
+    public RepositoryFile Repository;
+    IEnumerable<Value3> _values;
+    int _count = 0;
 
-    protected async override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
-        repository = await AzureRepositoriesService.GetAllRepositoryFiles(Branch);
-        values = repository.value.Where(x => x.gitObjectType.Equals("blob"));
-        count = values.Count();
+        Repository = await AzureRepositoriesService.GetAllRepositoryFiles(Branch);
+        _values = Repository.value.Where(x => x.gitObjectType.Equals("blob"));
+        _count = _values.Count();
     }
 }

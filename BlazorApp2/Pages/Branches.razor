@@ -9,16 +9,16 @@
 
 <h1>Branches</h1>
 
-<EditForm Model="@Repo" OnSubmit="@FormSubmitted">
+<EditForm Model="@_repo" OnSubmit="@FormSubmitted">
     <fieldset>
         <legend><strong>Select a branch</strong></legend>
 
         <div class="form-group">
-            <label for="r"><strong>Branches:</strong></label>
-            <InputSelect id="r" @bind-Value="Repo.Id" class="form-control" size="10">
-                @if (repository != null)
+            <label for="r" class="form-label"><strong>Branches:</strong></label>
+            <InputSelect id="r" @bind-Value="_repo.Id" class="form-control form-select form-select-sm mb-3" size="10">
+                @if (Repository != null)
                 {
-                    @foreach (var item in repository.value)
+                    @foreach (var item in Repository.value)
                     {
                         <option value="@item.name">@item.name</option>
                     }
@@ -37,18 +37,18 @@
     [Parameter]
     public string Id { get; set; }
 
-    public RepositoryBranch repository;
-    Repo Repo = new Repo();
-    int count = 0;
+    public RepositoryBranch Repository;
+    readonly Repo _repo = new();
+    int _count = 0;
 
-    protected async override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
-        repository = await AzureRepositoriesService.GetAllRepositoryBranches(Id);
-        count = repository.value.Count();
+        Repository = await AzureRepositoriesService.GetAllRepositoryBranches(Id);
+        _count = Repository.value.Count();
     }
 
     void FormSubmitted()
     {
-        NavigationManager.NavigateTo($"/files/{Repo.Id.Replace("/", "!")}", true);
+        NavigationManager.NavigateTo($"/files/{_repo.Id.Replace("/", "!")}", true);
     }
 }
