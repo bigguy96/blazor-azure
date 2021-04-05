@@ -1,0 +1,46 @@
+﻿:root {
+    --clr-gray200: #cfd8dc;
+    --radius: 0.2rem;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 100%;
+}
+
+.nav-list {
+    box-shadow: 0px 0px 10px var(--clr-gray200);
+    padding: 0.75rem 0;
+    border-radius: var(--radius);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.nav-item {
+    list-style: none;
+    margin-right: 1rem;
+}
+
+.nav-item a {
+        text-decoration: none;
+        transition: all 200ms ease-in;
+}
+
+
+/* GRID */
+.grid-container {
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+    height: calc(100vh - 10px);
+}
+
+/*  https://www.quackit.com/html/templates/css_grid_templates.cfm  */
