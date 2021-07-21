@@ -13,6 +13,7 @@ namespace Entities
         public int id { get; set; }
         public int rev { get; set; }
         public Fields fields { get; set; }
+        //public Relation[] relations { get; set; }
         public string url { get; set; }
         public Commentversionref commentVersionRef { get; set; }
     }
@@ -27,6 +28,9 @@ namespace Entities
         
         [JsonPropertyName("System.WorkItemType")]
         public string SystemWorkItemType { get; set; }
+
+        [JsonPropertyName("System.State")]
+        public string State { get; set; }
         
         [JsonPropertyName("System.AssignedTo")]
         public SystemAssignedto SystemAssignedTo { get; set; }
@@ -71,4 +75,17 @@ namespace Entities
         public int version { get; set; }
         public string url { get; set; }
     }
+
+    //public class Relation
+    //{
+    //    //public string rel { get; set; }
+    //    public string url { get; set; }
+    //    //public Attributes attributes { get; set; }
+    //}
+
+    //public class Attributes
+    //{
+    //    public bool isLocked { get; set; }
+    //    public string name { get; set; }
+    //}
 }

@@ -7,49 +7,58 @@
 
 @if (_workItem != null)
 {
-    @foreach (var item in _workItem.value)
-    {
+    <div class="grid-container">
+        @foreach (var item in _workItem.value)
+        {
+            <div class="card text-dark bg-light mb-3">
+                <div class="card-header"><strong>@item.fields.SystemTitle</strong></div>
+                <div class="card-body">
+                    <p>
+                        <strong>
+                            Assigned To:
+                        </strong>
+                        <br />@item.fields.SystemAssignedTo?.displayName
+                    </p>
+                    
+                    <p>
+                        <strong>
+                            State:
+                        </strong>
+                        <br />@item.fields.State
+                    </p>
 
-<div class="card text-dark bg-light mb-3">
-    <div class="card-header">@item.fields.SystemTitle</div>
-    <div class="card-body">
-        <p>
-            <strong>
-                Assigned To:
-            </strong>
-            <br />@item.fields.SystemAssignedTo?.displayName
-        </p>
+                    <p>
+                        <strong>
+                            Description:
+                        </strong>
+                        <br />@((MarkupString) item.fields.SystemDescription)
+                    </p>
 
-        <p>
-            <strong>
-                Description:
-            </strong>
-            <br />@((MarkupString) item.fields.SystemDescription)
-        </p>
+                    <p>
+                        <strong>
+                            Id:
+                        </strong>
+                        <br />@item.fields.SystemId
+                    </p>
 
-        <p>
-            <strong>
-                Id:
-            </strong>
-            <br />@item.fields.SystemId
-        </p>
+                    <p>
+                        <strong>
+                            Path:
+                        </strong>
+                        <br />@item.fields.SystemIterationPath
+                    </p>
 
-        <p>
-            <strong>
-                Path:
-            </strong>
-            <br />@item.fields.SystemIterationPath
-        </p>
+                    <p>
+                        <strong>
+                            Type:
+                        </strong>
+                        <br />@item.fields.SystemWorkItemType
+                    </p>
+                </div>
+            </div>
 
-        <p>
-            <strong>
-                Type:
-            </strong>
-            <br />@item.fields.SystemWorkItemType
-        </p>
+        }
     </div>
-</div>
-    }
 }
 
 @code {

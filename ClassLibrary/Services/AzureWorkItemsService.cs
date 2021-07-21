@@ -39,6 +39,7 @@ namespace ClassLibrary.Services
                 {
                     "System.Id",
                     "System.Title",
+                    "System.State",
                     "System.WorkItemType",
                     "System.IterationPath",
                     "System.AssignedTo",
